@@ -1,0 +1,35 @@
+{
+  "name": "kp-pruthvi-tax-consultant-backend",
+  "version": "1.0.0",
+  "description": "Backend API for KP PRUTHVI Tax Consultant website, CRM, lead management and business discovery system.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "tax",
+    "accounting",
+    "finance",
+    "crm",
+    "lead-management",
+    "business-discovery"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "node-cron": "^4.6.0",
+    "pg": "^8.23.0",
+    "zod": "^4.5.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
