@@ -1,64 +1,40 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { z } = require('zod')
+const User = require('../models/User')
+const { loginSchema } = require('../utils/validators')
+const { setAuthCookie, clearAuthCookie } = require('../utils/cookieHelper')
+const env = require('../config/env')
 
-const pool = require('../config/db')
-
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1),
-})
-
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const validation = loginSchema.safeParse(req.body)
 
     if (!validation.success) {
+      const errorMsg = validation.error.issues?.[0]?.message || validation.error.errors?.[0]?.message || 'Valid email and password are required'
       return res.status(400).json({
         success: false,
-        message: 'Valid email and password are required',
+        message: errorMsg,
       })
     }
 
     const { email, password } = validation.data
+    const user = await User.findByEmail(email)
 
-    const result = await pool.query(
-      `
-      SELECT
-        id,
-        full_name,
-        email,
-        password_hash,
-        role,
-        is_active
-      FROM users
-      WHERE email = $1
-      LIMIT 1
-      `,
-      [email.toLowerCase().trim()]
-    )
-
-    if (result.rows.length === 0) {
+    if (!user) {
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password',
       })
     }
 
-    const user = result.rows[0]
-
     if (!user.is_active) {
       return res.status(403).json({
         success: false,
-        message: 'This account is inactive',
+        message: 'This account has been deactivated. Please contact the administrator.',
       })
     }
 
-    const passwordMatches = await bcrypt.compare(
-      password,
-      user.password_hash
-    )
-
+    const passwordMatches = await bcrypt.compare(password, user.password_hash)
     if (!passwordMatches) {
       return res.status(401).json({
         success: false,
@@ -70,12 +46,15 @@ const login = async (req, res) => {
       {
         userId: user.id,
         role: user.role,
+        email: user.email,
+        name: user.full_name,
       },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: '8h',
-      }
+      env.JWT_SECRET,
+      { expiresIn: '8h' }
     )
+
+    // Set secure HttpOnly cookie
+    setAuthCookie(res, token)
 
     return res.json({
       success: true,
@@ -91,55 +70,53 @@ const login = async (req, res) => {
       },
     })
   } catch (error) {
-    console.error('Login error:', error)
-
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to login',
-    })
+    next(error)
   }
 }
 
-const me = async (req, res) => {
-  try {
-    const result = await pool.query(
-      `
-      SELECT
-        id,
-        full_name,
-        email,
-        role,
-        is_active,
-        created_at
-      FROM users
-      WHERE id = $1
-      LIMIT 1
-      `,
-      [req.user.userId]
-    )
+const logout = async (req, res) => {
+  clearAuthCookie(res)
+  return res.json({
+    success: true,
+    message: 'Logged out successfully',
+  })
+}
 
-    if (result.rows.length === 0) {
+const me = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.userId)
+
+    if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'User not found',
+        message: 'User account not found',
+      })
+    }
+
+    if (!user.is_active) {
+      return res.status(403).json({
+        success: false,
+        message: 'This account is no longer active',
       })
     }
 
     return res.json({
       success: true,
-      data: result.rows[0],
+      data: {
+        id: user.id,
+        full_name: user.full_name,
+        email: user.email,
+        role: user.role,
+        created_at: user.created_at,
+      },
     })
   } catch (error) {
-    console.error('Me error:', error)
-
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to fetch user',
-    })
+    next(error)
   }
 }
 
 module.exports = {
   login,
+  logout,
   me,
 }

@@ -1,18 +1,11 @@
 const express = require('express')
-
-const {
-  login,
-  me,
-} = require('../controllers/authController')
-
-const authMiddleware = require('../middleware/authMiddleware')
-
 const router = express.Router()
+const authController = require('../controllers/authController')
+const authMiddleware = require('../middleware/authMiddleware')
+const { loginLimiter } = require('../middleware/rateLimiter')
 
-// Admin login
-router.post('/login', login)
-
-// Get currently authenticated admin
-router.get('/me', authMiddleware, me)
+router.post('/login', loginLimiter, authController.login)
+router.post('/logout', authController.logout)
+router.get('/me', authMiddleware, authController.me)
 
 module.exports = router

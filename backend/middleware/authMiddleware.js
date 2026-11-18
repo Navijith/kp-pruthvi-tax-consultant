@@ -1,30 +1,25 @@
 const jwt = require('jsonwebtoken')
+const { getAuthToken } = require('../utils/cookieHelper')
+const env = require('../config/env')
 
 const authMiddleware = (req, res, next) => {
   try {
-    const authorization = req.headers.authorization
+    const token = getAuthToken(req)
 
-    if (!authorization || !authorization.startsWith('Bearer ')) {
+    if (!token) {
       return res.status(401).json({
         success: false,
-        message: 'Authentication required',
+        message: 'Authentication required. Please sign in.',
       })
     }
 
-    const token = authorization.substring(7)
-
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET
-    )
-
+    const decoded = jwt.verify(token, env.JWT_SECRET)
     req.user = decoded
-
     next()
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: 'Invalid or expired authentication token',
+      message: 'Invalid or expired session. Please sign in again.',
     })
   }
 }
