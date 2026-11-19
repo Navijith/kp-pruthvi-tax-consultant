@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /api/
 
-Sitemap: https://kptaxconsultants.com/sitemap.xml
+Sitemap: https://www.taxconsultantcom.com/sitemap.xml
