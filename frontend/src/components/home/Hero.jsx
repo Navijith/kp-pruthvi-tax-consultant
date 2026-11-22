@@ -19,10 +19,21 @@ function Hero() {
           transition={{ duration: 0.6 }}
         >
           {/* Eyebrow badge */}
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#e7d29b]">
-            <span>{site.practiceName}</span>
-            <span className="text-white/30">•</span>
-            <span>Online Practice</span>
+          <div className="flex flex-wrap items-center gap-2.5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-[#e7d29b]">
+              <span>{site.practiceName}</span>
+              <span className="text-white/30">•</span>
+              <span>Online Practice</span>
+            </div>
+            <a
+              href="https://www.google.com/search?q=KP+Tax+Consultants+Bengaluru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[#f59e0b]/40 bg-[#f59e0b]/15 px-3.5 py-1 text-xs font-semibold text-[#fde68a] hover:bg-[#f59e0b]/25 transition-colors"
+            >
+              <span className="text-[#f59e0b]">★★★★★</span>
+              <span>5.0 on Google (11 Reviews)</span>
+            </a>
           </div>
 
           <p className="mt-5 text-xs sm:text-sm font-bold uppercase tracking-[0.22em] text-[#d9b96d]">

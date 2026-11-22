@@ -91,27 +91,33 @@ function FeedbackSection() {
               <Star size={26} fill="#a77d2f" />
             </div>
             <div>
-              <div className="flex items-center gap-1 text-[#a77d2f]">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} size={16} fill="#a77d2f" className="text-[#a77d2f]" />
-                ))}
+              <div className="flex items-center gap-1.5">
+                <span className="font-bold text-[#122438] text-base">5.0</span>
+                <div className="flex items-center gap-0.5 text-[#f59e0b]">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star key={s} size={16} fill="#f59e0b" className="text-[#f59e0b]" />
+                  ))}
+                </div>
+                <span className="text-xs font-semibold text-[#687385]">(11 Verified Google Reviews)</span>
               </div>
               <p className="mt-1 text-sm font-bold text-[#122438]">
-                Dedicated Client Service Standards
+                KP Tax Consultants on Google Search & Maps
               </p>
               <p className="text-xs text-[#687385]">
-                Direct Consultant Accountability • Practical Guidance
+                144, 9th Cross, 2nd Phase, Sainagar, MS Palya, Vidyaranyapura, Bengaluru 560097
               </p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="rounded-full bg-[#2c5a4d]/10 px-3.5 py-1.5 text-xs font-semibold text-[#2c5a4d]">
-              ✓ Direct WhatsApp Dispatch
-            </span>
-            <span className="rounded-full bg-[#122438]/5 px-3.5 py-1.5 text-xs font-semibold text-[#122438]">
-              ✓ Real Customer Feedback
-            </span>
+            <a
+              href="https://www.google.com/search?q=KP+Tax+Consultants+Bengaluru"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#122438] px-4 py-2.5 text-xs font-bold text-white shadow-xs hover:bg-[#1a334d] transition-colors"
+            >
+              <span>View Google Business Profile ↗</span>
+            </a>
           </div>
         </div>
 

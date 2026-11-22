@@ -144,9 +144,18 @@ function Footer() {
         <div>
           <h3 className="text-xs font-bold uppercase tracking-[0.16em] text-white">Practice Information</h3>
           <div className="mt-4 space-y-3 text-xs sm:text-sm text-[#aeb9c5]">
+            <a
+              href="https://www.google.com/search?q=KP+Tax+Consultants+Bengaluru"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-start gap-2.5 hover:text-white transition"
+            >
+              <span className="text-[#d9b96d] shrink-0 font-bold">📍</span>
+              <span>144, 9th Cross, 2nd Phase, Sainagar, MS Palya, Vidyaranyapura, Bengaluru 560097</span>
+            </a>
             <div className="flex items-start gap-2.5">
               <Monitor size={16} className="mt-0.5 shrink-0 text-[#d9b96d]" />
-              <span>100% Online & Remote Practice</span>
+              <span>100% Online & Remote Consultations</span>
             </div>
             <a href={`mailto:${site.email}`} className="flex items-start gap-2.5 break-all hover:text-white transition">
               <Mail size={16} className="mt-0.5 shrink-0 text-[#d9b96d]" />
