@@ -9,7 +9,7 @@ export const site = {
   whatsapp: '917019484928',
   email: 'pruthvigowda003@gmail.com',
   location: 'Bengaluru, Karnataka (Online & Remote Practice)',
-  hours: '6 days a week • 9:00 AM–7:00 PM',
+  hours: 'Mon–Sat • 9:30 AM–6:30 PM (Online Consultations)',
 
   // Core business positioning
   positioning:
